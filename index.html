@@ -382,11 +382,11 @@
 
         const displayTags = t.length ? t.slice(0,4) : (repo.language ? [repo.language,'Data Science'] : ['Data Science']);
         const tagsHtml = displayTags.map(tag=>`<span class="tag">${tag}</span>`).join('');
-        const emoji = banners[i % banners.length];
+        const repoIconos = { 'tuusuario.github.io': 'ICONOS/Avatar.png', 'Miami-Heat': 'ICONOS/Miami Heat.jpg', 'Supertienda': 'ICONOS/Supertienda.jpeg', 'Dress-PowerBI': 'ICONOS/dress.jpg' };
         const bg = bgColors[i % bgColors.length];
 
         return `<div class="proj-card" data-category="${category}">
-          <div class="proj-banner" style="background:${bg}">${emoji}</div>
+          <div class="proj-banner" style="background:${bg};overflow:hidden;padding:0">${repoIconos[repo.name] ? `<img src="${repoIconos[repo.name]}" alt="${repo.name}" style="width:100%;height:100%;object-fit:cover">` : banners[i % banners.length]}</div>
           <div class="proj-body">
             <h3>${repo.name.replace(/-|_/g,' ')}</h3>
             <p>${description}</p>
