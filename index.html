@@ -382,7 +382,7 @@
 
         const displayTags = t.length ? t.slice(0,4) : (repo.language ? [repo.language,'Data Science'] : ['Data Science']);
         const tagsHtml = displayTags.map(tag=>`<span class="tag">${tag}</span>`).join('');
-        const repoIconos = { 'tuusuario.github.io': 'ICONOS/Avatar.png', 'Miami-Heat': 'ICONOS/Miami Heat.jpg', 'Supertienda': 'ICONOS/Supertienda.jpeg', 'Dress-PowerBI': 'ICONOS/dress.jpg' };
+        const repoIconos = { 'tuusuario.github.io': 'https://raw.githubusercontent.com/coderhouse2025-droid/tuusuario.github.io/main/ICONOS/Avatar.png', 'Miami-Heat': 'https://raw.githubusercontent.com/coderhouse2025-droid/tuusuario.github.io/main/ICONOS/Miami%20Heat.jpg', 'Supertienda': 'https://raw.githubusercontent.com/coderhouse2025-droid/tuusuario.github.io/main/ICONOS/Supertienda.jpeg', 'Dress-PowerBI': 'https://raw.githubusercontent.com/coderhouse2025-droid/tuusuario.github.io/main/ICONOS/dress.jpg' };
         const bg = bgColors[i % bgColors.length];
 
         return `<div class="proj-card" data-category="${category}">
