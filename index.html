@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Juan Manuel Orellana – Data Scientist</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&family=Space+Mono&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&family=Space+Mono&display=swap" rel="stylesheet"/><script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script><script>(function(){emailjs.init({publicKey:"qGH4qI07I6OnjI9xg"});})();</script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -415,7 +415,7 @@
     if (!name || !email || !msg) { feedback.textContent = '⚠️ Completá todos los campos.'; return; }
     const subject = encodeURIComponent('Contacto desde portfolio — ' + name);
     const body = encodeURIComponent('Nombre: ' + name + '\nEmail: ' + email + '\n\n' + msg);
-    window.location.href = 'mailto:orellanajuan80@hotmail.com?subject=' + subject + '&body=' + body;
+    emailjs.send('service_abc123', 'template_xyz789', { from_name: name, from_email: email, message: msg, to_email: 'orellanajuan80@hotmail.com' }).then(function(){ feedback.textContent = '✅ ¡Mensaje enviado correctamente!'; document.getElementById('f-name').value = ''; document.getElementById('f-email').value = ''; document.getElementById('f-msg').value = ''; }, function(error){ feedback.textContent = '❌ Error al enviar. Intentá de nuevo.'; console.error('EmailJS error:', error); }); return;
     feedback.textContent = '✅ Abriendo tu cliente de correo...';
     document.getElementById('f-name').value = '';
     document.getElementById('f-email').value = '';
