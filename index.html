@@ -71,7 +71,7 @@
     .hero-skills { display:flex; flex-wrap:wrap; gap:0.6rem; justify-content:center; margin-bottom:1.6rem; animation:fadeUp 0.7s 0.2s ease both; }
     .skill-chip { font-family:'Space Mono',monospace; font-size:0.78rem; padding:0.35rem 0.85rem; border-radius:6px; background:var(--accent-light); border:1px solid var(--border); color:var(--accent); }
 
-    .hero-bio { max-width:520px; font-size:1.05rem; line-height:1.75; color:var(--muted); margin-bottom:2.5rem; animation:fadeUp 0.7s 0.3s ease both; text-align:justify; }
+    .hero-bio { max-width:820px; width:90%; font-size:1.05rem; line-height:1.75; color:var(--muted); margin-bottom:2.5rem; animation:fadeUp 0.7s 0.3s ease both; text-align:justify; }
 
     .cta-row { display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; animation:fadeUp 0.7s 0.4s ease both; }
     .btn { display:inline-block; padding:0.85rem 2rem; border-radius:10px; font-weight:500; font-size:0.95rem; text-decoration:none; transition:transform 0.2s,box-shadow 0.2s; cursor:pointer; border:none; }
@@ -100,7 +100,7 @@
     .btn-cv:hover { transform:translateY(-2px); box-shadow:0 10px 30px rgba(26,107,60,0.35); }
 
     /* HABILIDADES */
-    .skills-group { margin-bottom:2.5rem; }
+    .skills-group { margin-bottom:2.5rem; padding-bottom:0.5rem; }
     .skills-group-label { font-family:'Space Mono',monospace; font-size:0.72rem; letter-spacing:0.15em; color:var(--accent); text-transform:uppercase; margin-bottom:1rem; }
     .skills-grid { display:flex; flex-wrap:wrap; gap:0.9rem; }
     .skill-card { background:#fff; border:1px solid var(--border); border-radius:12px; padding:1rem 1.2rem; display:flex; flex-direction:column; align-items:center; gap:0.5rem; min-width:90px; text-align:center; transition:transform 0.2s,box-shadow 0.2s; box-shadow:0 2px 10px rgba(0,0,0,0.04); }
@@ -206,7 +206,7 @@
   <div class="detail-card">
     <div class="detail-item"><span class="detail-icon">📍</span> Ramos Mejía, Argentina</div>
     <div class="detail-item"><span class="detail-icon">💼</span> Disponible para trabajar</div>
-    <div class="detail-item"><span class="detail-icon">🎓</span> Data Science I y II — Coderhouse</div><div class="detail-item"><span class="detail-icon">🎓</span> Lic. en Administración · Contador Público — Universidad Nacional</div>
+    <div class="detail-item"><span class="detail-icon">🎓</span> Lic. en Administración · Contador Público — [Universidad]</div><div class="detail-item"><span class="detail-icon">📊</span> Data Science I y II — Coderhouse</div>
     <div class="detail-item"><span class="detail-icon">🌐</span> Español (nativo) · Inglés (básico)</div>
     <div class="detail-item"><span class="detail-icon">💡</span> ML · Análisis Económico - Financiero · Control de Gestión</div>
     <a href="cv-viewer.html" target="_blank" class="btn-cv">📄 Descargar cv</a>
@@ -218,7 +218,7 @@
   <div class="section-label">// stack técnico</div>
   <h2 class="section-title">Habilidades</h2>
 
-  <div class="skills-group">
+  <div class="skills-group" style="margin-top:2.5rem">
     <div class="skills-group-label">Lenguajes</div>
     <div class="skills-grid">
       <div class="skill-card">
@@ -291,7 +291,7 @@
   <div class="filter-row" id="filters">
     <button class="filter-btn active" data-filter="all">Todos</button>
     <button class="filter-btn" data-filter="ml">Machine Learning</button>
-    <button class="filter-btn" data-filter="analytics">Data Analysis</button>
+    <button class="filter-btn" data-filter="analytics">Data Analysis</button><button class="filter-btn" data-filter="bi">BI</button>
     
   </div>
   <div class="projects-grid" id="projects-grid">
@@ -312,7 +312,7 @@
           GitHub
         </a>
         
-        <a href="https://public.tableau.com/app/profile/coderhouse2025.droid" target="_blank" class="social-btn"><img src="https://raw.githubusercontent.com/coderhouse2025-droid/tuusuario.github.io/main/ICONOS/Tableau-Logo.png" style="width:15px;height:15px;object-fit:contain" alt="Tableau"> Tableau</a><a href="https://www.linkedin.com" target="_blank" class="social-btn">💼 LinkedIn</a>
+        <a href="https://public.tableau.com/app/profile/juanma.orellana" target="_blank" class="social-btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M11.5 4.5h1v4h4v1h-4v4h-1v-4h-4v-1h4zm-8 7.5h3v6h-3zm17 0h3v6h-3zm-8.5 4h3v4h-3zm0-13h3v4h-3zm8.5 4h3v3h-3zm-17 0h3v3h-3zm8.5 9h3v3h-3z"/></svg> Tableau</a><a href="https://www.linkedin.com" target="_blank" class="social-btn">💼 LinkedIn</a>
       </div>
     </div>
     <div class="contact-form">
@@ -381,7 +381,7 @@
         } catch(e){}
 
         const t = repo.topics || [];
-        let category = 'analytics';
+        let category = 'analytics'; if (repo.name === 'Tableau.github.io' || repo.name === 'Dress---Power-BI') category = 'bi';
         if (t.some(x=>['nlp','text','sentiment','natural-language'].includes(x))) category='nlp';
         else if (t.some(x=>['ml','machine-learning','deep-learning','sklearn','classification','regression'].includes(x))) category='ml';
         else if (repo.name.toLowerCase().includes('ml') || repo.name.toLowerCase().includes('model')) category='ml';
