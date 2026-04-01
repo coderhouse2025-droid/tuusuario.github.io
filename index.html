@@ -507,10 +507,8 @@ Ramos Mejía, Argentina</div>
 Disponible para trabajar</div>
 
 <div class="detail-item"><span class="detail-icon">🎓</span>
-Lic. en Administración · Contador Público ---
-[Universidad]</div><div class="detail-item"><span
-class="detail-icon">📊</span> Data Science I y II ---
-Coderhouse</div>
+Lic. en Administración · Contador Público - [Universidad]</div><div class="detail-item"><span
+class="detail-icon">📊</span> Data Science I y II - Coderhouse</div>
 
 <div class="detail-item"><span class="detail-icon">🌐</span>
 Español (nativo) · Inglés (básico)</div>
@@ -518,7 +516,7 @@ Español (nativo) · Inglés (básico)</div>
 <div class="detail-item"><span class="detail-icon">💡</span>
 ML · Análisis Económico - Financiero · Control de Gestión</div>
 
-<a href="CV-JuanManuelOrellana.pdf" target="_blank" class="btn-cv">📄 Ver / Descargar CV</a>
+<a href="CV/CV-JuanManuelOrellana.pdf.pdf" target="_blank" class="btn-cv">📄 Descargar CV</a>
 
 </div>
 
@@ -856,7 +854,7 @@ const grid = document.getElementById("projects-grid");
 try {
 
 const res = await
-fetch("https://api.github.com/users/coderhouse2025-droid/repos?sort=updated&per_page=9");
+fetch("https://api.github.com/users/coderhouse2025-droid/repos?sort=updated&per_page=20&type=public");
 
 const repos = await res.json();
 
@@ -1053,4 +1051,3 @@ document.getElementById("f-msg").value = "";
 </body>
 
 </html>
-        
