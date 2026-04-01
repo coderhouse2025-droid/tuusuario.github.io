@@ -1055,3 +1055,82 @@ document.getElementById("f-msg").value = "";
 </body>
 
 </html>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CV – Juan Manuel Orellana</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --green:#1a6b3c; --green-mid:#2d9e5f; --border:rgba(26,107,60,0.15); --text:#0f1f14; --muted:#5a6e62; }
+    body { font-family:'DM Sans',sans-serif; background:#f6faf8; color:var(--text); min-height:100vh; display:flex; flex-direction:column; }
+    .topbar { position:sticky; top:0; z-index:10; background:rgba(255,255,255,0.93); backdrop-filter:blur(12px); border-bottom:1px solid var(--border); padding:0.9rem 2rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
+    .topbar-left { display:flex; align-items:center; gap:0.9rem; }
+    .back-btn { display:inline-flex; align-items:center; gap:0.4rem; font-size:0.85rem; font-weight:500; color:var(--muted); text-decoration:none; padding:0.4rem 0.9rem; border-radius:8px; border:1px solid var(--border); background:white; transition:all 0.2s; }
+    .back-btn:hover { color:var(--green); border-color:var(--green); }
+    .topbar-title { font-family:'DM Serif Display',serif; font-size:1rem; color:var(--text); }
+    .topbar-title span { color:var(--green); }
+    .download-btn { display:inline-flex; align-items:center; gap:0.5rem; background:var(--green); color:#fff; font-weight:600; font-size:0.92rem; padding:0.65rem 1.5rem; border-radius:10px; text-decoration:none; box-shadow:0 6px 20px rgba(26,107,60,0.25); transition:transform 0.2s,box-shadow 0.2s; }
+    .download-btn:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(26,107,60,0.35); }
+    .viewer-wrap { flex:1; display:flex; flex-direction:column; align-items:center; padding:2rem 1rem 3rem; }
+    .pdf-frame { width:100%; max-width:860px; height:80vh; min-height:500px; border:none; border-radius:14px; box-shadow:0 8px 40px rgba(0,0,0,0.10); background:white; }
+    .fallback { display:none; flex-direction:column; align-items:center; gap:1.2rem; padding:3rem; text-align:center; max-width:480px; margin:2rem auto; background:white; border-radius:16px; border:1px solid var(--border); }
+    .fallback p { color:var(--muted); font-size:0.95rem; line-height:1.6; }
+    .footer-bar { text-align:center; padding:1.2rem; font-size:0.8rem; color:var(--muted); border-top:1px solid var(--border); background:white; }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-left">
+      <a href="index.html" class="back-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        Volver al portfolio
+      </a>
+      <span class="topbar-title">CV — <span>Juan Manuel Orellana</span></span>
+    </div>
+    <a id="download-link" class="download-btn" href="#" download="CV-JuanManuelOrellana.pdf">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Descargar CV
+    </a>
+  </div>
+
+  <div class="viewer-wrap">
+    <iframe id="pdf-iframe" class="pdf-frame" title="CV Juan Manuel Orellana" allowfullscreen></iframe>
+    <div class="fallback" id="fallback">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#1a6b3c" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      <p>No se pudo previsualizar el CV.<br>Usá el botón para descargarlo directamente.</p>
+      <a id="fallback-link" class="download-btn" href="#" download="CV-JuanManuelOrellana.pdf">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Descargar CV
+      </a>
+    </div>
+  </div>
+
+  <div class="footer-bar">Juan Manuel Orellana &nbsp;·&nbsp; Data Science & Analytics &nbsp;·&nbsp; 2026</div>
+
+  <script>
+    // URL raw de GitHub - la más confiable para descarga directa
+    var rawUrl = 'https://raw.githubusercontent.com/coderhouse2025-droid/tuusuario.github.io/main/CV/CV%20-%20ORELLANA.pdf';
+
+    // Botones de descarga
+    document.getElementById('download-link').href = rawUrl;
+    document.getElementById('fallback-link').href = rawUrl;
+
+    // Visor con Google Docs Viewer
+    var iframe = document.getElementById('pdf-iframe');
+    var fallback = document.getElementById('fallback');
+    iframe.src = 'https://docs.google.com/viewer?url=' + encodeURIComponent(rawUrl) + '&embedded=true';
+
+    var loaded = false;
+    iframe.addEventListener('load', function() { loaded = true; });
+    setTimeout(function() {
+      if (!loaded) {
+        iframe.style.display = 'none';
+        fallback.style.display = 'flex';
+      }
+    }, 10000);
+  </script>
+</body>
+</html>
