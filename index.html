@@ -643,7 +643,7 @@ style="width:40px;height:40px;object-fit:contain"><span>Tableau</span></div>
 
 </div>
 
-<div class="skills-group">
+<div class="skills-group" style="margin-top:2.5rem">
 
 <div class="skills-group-label">Herramientas</div>
 
@@ -698,11 +698,11 @@ alt="Jupyter">
 <button class="filter-btn active"
 data-filter="all">Todos</button>
 
-<button class="filter-btn" data-filter="ml">Machine
-Learning</button>
+<button class="filter-btn" data-filter="ml">Machine Learning</button>
 
-<button class="filter-btn" data-filter="analytics">Data
-Analysis</button>
+<button class="filter-btn" data-filter="analytics">Data Analysis</button>
+
+<button class="filter-btn" data-filter="bi">BI</button>
 
 </div>
 
@@ -752,7 +752,7 @@ GitHub
 
 </a>
 
-<a href="https://public.tableau.com/app/profile/coderhouse2025.droid"
+<a href="https://public.tableau.com/app/profile/juan.manuel.orellana"
 target="_blank" class="social-btn"><img
 src="https://raw.githubusercontent.com/coderhouse2025-droid/tuusuario.github.io/main/ICONOS/Tableau-Logo.png"
 style="width:15px;height:15px;object-fit:contain" alt="Tableau">
@@ -883,13 +883,22 @@ async function loadRepos() {
       const description = repo.description || 'Repositorio de Data Science.';
       const t = repo.topics || [];
 
-      let category = 'analytics';
-      if (repo.name === 'Tableau.github.io') category = 'bi';
-      if (['Dress---Power-BI','Dress-PowerBI','dress-powerbi'].includes(repo.name)) category = 'bi';
-      if (t.some(x => ['ml','machine-learning','deep-learning','sklearn','classification','regression'].includes(x))) category = 'ml';
-      else if (repo.name.toLowerCase().includes('ml') || repo.name.toLowerCase().includes('model')) category = 'ml';
-      if (['Miami-Heat','Supertienda'].includes(repo.name)) category = 'analytics';
-      if (repo.name === 'Tableau.github.io') category = 'bi';
+      // Explicit category map (overrides topic detection)
+      const categoryMap = {
+        'tuusuario.github.io': 'ml',
+        'Miami-Heat':          'analytics',
+        'Supertienda':         'analytics',
+        'Tableau.github.io':   'bi',
+        'Dress---Power-BI':    'bi',
+        'Dress-PowerBI':       'bi',
+        'dress-powerbi':       'bi'
+      };
+      let category = categoryMap[repo.name] || 'analytics';
+      // Topic-based detection for unlisted repos
+      if (!categoryMap[repo.name]) {
+        if (t.some(x => ['ml','machine-learning','deep-learning','sklearn','classification','regression'].includes(x))) category = 'ml';
+        else if (repo.name.toLowerCase().includes('ml') || repo.name.toLowerCase().includes('model')) category = 'ml';
+      }
 
       const repoUrl = repo.name === 'Tableau.github.io'
         ? 'https://coderhouse2025-droid.github.io/Tableau.github.io/'
