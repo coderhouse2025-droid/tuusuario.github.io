@@ -516,7 +516,7 @@ Español (nativo) · Inglés (básico)</div>
 <div class="detail-item"><span class="detail-icon">💡</span>
 ML · Análisis Económico - Financiero · Control de Gestión</div>
 
-<a href="https://raw.githubusercontent.com/coderhouse2025-droid/tuusuario.github.io/main/CV/CV-JuanManuelOrellana.pdf.pdf" download="CV-JuanManuelOrellana.pdf" target="_blank" class="btn-cv">📄 Descargar CV</a>
+<a href="cv-viewer.html" target="_blank" class="btn-cv">📄 Descargar CV</a>
 
 </div>
 
@@ -850,10 +850,11 @@ const bgColors =
 async function loadRepos() {
 const grid = document.getElementById('projects-grid');
 try {
-  const res = await fetch('https://api.github.com/users/coderhouse2025-droid/repos?sort=updated&per_page=20&type=public');
-  if (!res.ok) { grid.innerHTML = '<p class="proj-loading">⚠️ No se pudieron cargar los repositorios (error ' + res.status + ').</p>'; return; }
+  const res = await fetch('https://api.github.com/users/coderhouse2025-droid/repos?sort=updated&per_page=9');
   const repos = await res.json();
-  if (!Array.isArray(repos) || repos.length === 0) { grid.innerHTML = '<p class="proj-loading">No se encontraron repositorios públicos.</p>'; return; }
+  if (!Array.isArray(repos) || repos.length === 0) {
+    grid.innerHTML = '<p class="proj-loading">No se encontraron repositorios públicos.</p>'; return;
+  }
 
   const bgColors = ['#e8f5ee','#e6f3ec','#eaf7f0','#f0faf4','#e8f5ee','#ecf7f1'];
   const banners  = ['📊','🤖','📈','🔍','⚙️','🧠'];
@@ -864,67 +865,78 @@ try {
     'Supertienda':         'https://raw.githubusercontent.com/coderhouse2025-droid/tuusuario.github.io/main/ICONOS/Supertienda.png',
     'Dress---Power-BI':    'https://raw.githubusercontent.com/coderhouse2025-droid/tuusuario.github.io/main/ICONOS/dress.png',
     'Tableau.github.io':   'https://raw.githubusercontent.com/coderhouse2025-droid/tuusuario.github.io/main/ICONOS/Tableau-Logo.png',
-    'Dress-PowerBI':       'https://raw.githubusercontent.com/coderhouse2025-droid/tuusuario.github.io/main/ICONOS/dress.png'
+    'Dress-PowerBI':       'https://raw.githubusercontent.com/coderhouse2025-droid/tuusuario.github.io/main/ICONOS/dress.png',
+    'Dress Power BI':      'https://raw.githubusercontent.com/coderhouse2025-droid/tuusuario.github.io/main/ICONOS/dress.png',
+    'dress-powerbi':       'https://raw.githubusercontent.com/coderhouse2025-droid/tuusuario.github.io/main/ICONOS/dress.png'
   };
 
-  const cards = repos.map(function(repo, i) {
-    const description = repo.description || 'Repositorio de Data Science.';
+  const cards = await Promise.all(repos.map(async (repo, i) => {
+    let description = repo.description || 'Repositorio de Data Science.';
+
+    // Leer README para descripción
+    try {
+      const r = await fetch(`https://api.github.com/repos/coderhouse2025-droid/${repo.name}/readme`,
+        { headers: { Accept: 'application/vnd.github.raw' } });
+      if (r.ok) {
+        const txt = await r.text();
+        const clean = txt.replace(/!\[.*?\]\(.*?\)/g,'').replace(/\[([^\]]+)\]\([^)]+\)/g,'$1').replace(/[#*`>_~]/g,'').trim();
+        const lines = clean.split('\n').map(l => l.trim()).filter(l => l.length > 30);
+        if (lines[0]) description = lines[0].slice(0,160) + (lines[0].length > 160 ? '...' : '');
+      }
+    } catch(e) {}
+
     const t = repo.topics || [];
 
-    // Determine category
+    // Categorías
     let category = 'analytics';
-    if (repo.name === 'Tableau.github.io') category = 'bi';
-    if (['Dress---Power-BI','Dress-PowerBI','dress-powerbi'].includes(repo.name)) category = 'bi';
-    if (['Miami-Heat','Supertienda'].includes(repo.name)) category = 'analytics';
-    if (t.some(function(x){ return ['ml','machine-learning','deep-learning','sklearn','classification','regression'].indexOf(x) >= 0; })) category = 'ml';
-    if (repo.name.toLowerCase().indexOf('ml') >= 0 || repo.name.toLowerCase().indexOf('model') >= 0) category = 'ml';
-    // Re-apply explicit overrides after topic detection
+    if (repo.name === 'Tableau.github.io' || repo.name === 'Dress---Power-BI') category = 'bi';
+    if (t.some(x => ['nlp','text','sentiment','natural-language'].includes(x))) category = 'nlp';
+    else if (t.some(x => ['ml','machine-learning','deep-learning','sklearn','classification','regression'].includes(x))) category = 'ml';
+    else if (repo.name.toLowerCase().includes('ml') || repo.name.toLowerCase().includes('model')) category = 'ml';
+    // Overrides explícitos
     if (['Miami-Heat','Supertienda'].includes(repo.name)) category = 'analytics';
     if (repo.name === 'Tableau.github.io') category = 'bi';
 
-    // Custom URL for Tableau
+    // URL custom para Tableau
     const repoUrl = repo.name === 'Tableau.github.io'
       ? 'https://coderhouse2025-droid.github.io/Tableau.github.io/'
       : repo.html_url;
 
-    const displayTags = t.length ? t.slice(0,4) : (repo.language ? [repo.language, 'Data Science'] : ['Data Science']);
-    const tagsHtml = displayTags.map(function(tag){ return '<span class="tag">' + tag + '</span>'; }).join('');
-
+    const displayTags = t.length ? t.slice(0,4) : (repo.language ? [repo.language,'Data Science'] : ['Data Science']);
+    const tagsHtml = displayTags.map(tag => `<span class="tag">${tag}</span>`).join('');
     const bg = bgColors[i % bgColors.length];
     const iconUrl = repoIconos[repo.name];
     const bannerContent = iconUrl
-      ? '<img src="' + iconUrl + '" alt="' + repo.name + '" style="max-width:80%;max-height:110px;object-fit:contain;display:block;margin:auto">'
+      ? `<img src="${iconUrl}" alt="${repo.name}" style="max-width:80%;max-height:110px;object-fit:contain;display:block;margin:auto">`
       : banners[i % banners.length];
 
-    const displayName = repo.name.replace(/[-_]/g,' ');
-
-    return '<div class="proj-card" data-category="' + category + '">'
-      + '<div class="proj-banner" style="background:' + bg + ';overflow:hidden;padding:0">' + bannerContent + '</div>'
-      + '<div class="proj-body">'
-      + '<h3>' + displayName + '</h3>'
-      + '<p>' + description + '</p>'
-      + '<div class="proj-tags">' + tagsHtml + '</div>'
-      + '<a href="' + repoUrl + '" target="_blank" class="proj-link">'
-      + '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>'
-      + ' Ver código →'
-      + '</a>'
-      + '</div>'
-      + '</div>';
-  });
+    return `<div class="proj-card" data-category="${category}">
+      <div class="proj-banner" style="background:${bg};overflow:hidden;padding:0">${bannerContent}</div>
+      <div class="proj-body">
+        <h3>${repo.name.replace(/[-_]/g,' ')}</h3>
+        <p>${description}</p>
+        <div class="proj-tags">${tagsHtml}</div>
+        <a href="${repoUrl}" target="_blank" class="proj-link">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          Ver código →
+        </a>
+      </div>
+    </div>`;
+  }));
 
   grid.innerHTML = cards.join('');
 
-  // Re-apply active filter
+  // Re-aplicar filtro activo
   const activeBtn = document.querySelector('.filter-btn.active');
   if (activeBtn) {
     const f = activeBtn.dataset.filter;
-    document.querySelectorAll('.proj-card').forEach(function(card){
+    document.querySelectorAll('.proj-card').forEach(card => {
       card.style.display = (f === 'all' || card.dataset.category === f) ? '' : 'none';
     });
   }
 
 } catch(e) {
-  grid.innerHTML = '<p class="proj-loading">⚠️ Error al cargar repositorios: ' + e.message + '</p>';
+  grid.innerHTML = '<p class="proj-loading">⚠️ Error: ' + e.message + '</p>';
 }
 }
 
