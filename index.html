@@ -851,7 +851,8 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.classList.add('active');
     const f = btn.dataset.filter;
     document.querySelectorAll('.proj-card').forEach(card => {
-      card.style.display = (f === 'all' || card.dataset.category === f) ? '' : 'none';
+      const cats = (card.dataset.categories || card.dataset.category).split(',');
+      card.style.display = (f === 'all' || cats.includes(f)) ? '' : 'none';
     });
   });
 });
@@ -883,22 +884,18 @@ async function loadRepos() {
       const description = repo.description || 'Repositorio de Data Science.';
       const t = repo.topics || [];
 
-      // Explicit category map (overrides topic detection)
+      // Multi-category map: repo can appear under multiple filters
       const categoryMap = {
-        'tuusuario.github.io': 'ml',
-        'Miami-Heat':          'analytics',
-        'Supertienda':         'analytics',
-        'Tableau.github.io':   'bi',
-        'Dress---Power-BI':    'bi',
-        'Dress-PowerBI':       'bi',
-        'dress-powerbi':       'bi'
+        'tuusuario.github.io': ['ml','analytics'],
+        'Miami-Heat':          ['ml','analytics'],
+        'Supertienda':         ['ml','analytics'],
+        'Tableau.github.io':   ['bi'],
+        'Dress---Power-BI':    ['bi','analytics'],
+        'Dress-PowerBI':       ['bi','analytics'],
+        'dress-powerbi':       ['bi','analytics']
       };
-      let category = categoryMap[repo.name] || 'analytics';
-      // Topic-based detection for unlisted repos
-      if (!categoryMap[repo.name]) {
-        if (t.some(x => ['ml','machine-learning','deep-learning','sklearn','classification','regression'].includes(x))) category = 'ml';
-        else if (repo.name.toLowerCase().includes('ml') || repo.name.toLowerCase().includes('model')) category = 'ml';
-      }
+      const categories = categoryMap[repo.name] || ['analytics'];
+      const category = categories[0]; // primary category stored in data-category
 
       const repoUrl = repo.name === 'Tableau.github.io'
         ? 'https://coderhouse2025-droid.github.io/Tableau.github.io/'
@@ -912,7 +909,7 @@ async function loadRepos() {
         ? `<img src="${iconUrl}" alt="${repo.name}" style="max-width:80%;max-height:110px;object-fit:contain;display:block;margin:auto">`
         : banners[i % banners.length];
 
-      return `<div class="proj-card" data-category="${category}">
+      return `<div class="proj-card" data-category="${category}" data-categories="${categories.join(',')}">
         <div class="proj-banner" style="background:${bg};overflow:hidden;padding:0">${bannerContent}</div>
         <div class="proj-body">
           <h3>${repo.name.replace(/[-_]/g,' ')}</h3>
@@ -932,7 +929,8 @@ async function loadRepos() {
     if (activeBtn) {
       const f = activeBtn.dataset.filter;
       document.querySelectorAll('.proj-card').forEach(card => {
-        card.style.display = (f === 'all' || card.dataset.category === f) ? '' : 'none';
+        const cats = (card.dataset.categories || card.dataset.category).split(',');
+        card.style.display = (f === 'all' || cats.includes(f)) ? '' : 'none';
       });
     }
   } catch(e) {
