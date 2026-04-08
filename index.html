@@ -1,50 +1,4 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-<!-- ===== OPEN GRAPH META TAGS (CORREGIDOS) ===== -->
-<meta property="og:title" content="Juan Manuel Orellana | Data Science & Analytics"/>
-<meta property="og:description" content="Data Scientist especializado en Python, Machine Learning, SQL y Analytics. Experto en análisis de datos y soluciones de Business Intelligence."/>
-<meta property="og:type" content="website"/>
-<meta property="og:url" content="https://coderhouse2025-droid.github.io/tuusuario.github.io/"/>
-<meta property="og:image" content="https://raw.githubusercontent.com/coderhouse2025-droid/tuusuario.github.io/main/ICONOS/Avatar.png"/>
-<meta property="og:image:width" content="400"/>
-<meta property="og:image:height" content="400"/>
-
-<!-- ===== TWITTER CARD META TAGS ===== -->
-<meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="Juan Manuel Orellana | Data Science & Analytics"/>
-<meta name="twitter:description" content="Data Scientist especializado en Python, Machine Learning, SQL y Analytics. Especialista en análisis de datos y Business Intelligence."/>
-<meta name="twitter:image" content="https://raw.githubusercontent.com/coderhouse2025-droid/tuusuario.github.io/main/ICONOS/Avatar.png"/>
-
-<!-- ===== STANDARD META TAGS ===== -->
-<title>Juan Manuel Orellana | Data Science & Analytics</title>
-<meta name="description" content="Portfolio de Data Science - Python, Machine Learning, SQL, Tableau, Power BI. Especialista en análisis de datos y Business Intelligence."/>
-<meta name="keywords" content="Data Science, Machine Learning, Python, SQL, Analytics, Tableau, Power BI, Data Analyst"/>
-<meta name="author" content="Juan Manuel Orellana"/>
-
-<!-- ===== JSON-LD STRUCTURED DATA ===== -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Juan Manuel Orellana",
-  "jobTitle": "Data Scientist & Analytics Professional",
-  "url": "https://coderhouse2025-droid.github.io/tuusuario.github.io/",
-  "image": "https://raw.githubusercontent.com/coderhouse2025-droid/tuusuario.github.io/main/ICONOS/Avatar.png",
-  "sameAs": [
-    "https://github.com/coderhouse2025-droid",
-    "https://public.tableau.com/app/profile/juan.manuel.orellana"
-  ],
-  "location": {
-    "@type": "Place",
-    "name": "Ramos Mejía, Argentina"
-  },
-  "description": "Data Scientist especializado en Python, Machine Learning, SQL y Business Analytics. Experiencia en análisis de datos complejos y desarrollo de soluciones analíticas."
-}
-<!DOCTYPE html>
 
 <html lang="es">
 
@@ -72,7 +26,7 @@ href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&fam
 rel="stylesheet"/><script
 src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
-<script>(function(){emailjs.init({publicKey:"qGH4qI07I6OnjI9xg"});})();</script>
+<script>(function(){emailjs.init({publicKey:"qGH4qI07I6OnjI9xg", blockHeadless: false});})();</script>
 
 <style>
 
@@ -994,7 +948,7 @@ function sendMail() {
   const msg = document.getElementById('f-msg').value.trim();
   const feedback = document.getElementById('form-msg');
   if (!name || !email || !msg) { feedback.textContent = '⚠️ Completá todos los campos.'; return; }
-  emailjs.send('service_abc123','template_xyz789',{from_name:name,from_email:email,message:msg,to_email:'orellanajuan80@hotmail.com'})
+  emailjs.send('service_abc123','template_xyz789',{name:name,from_name:name,from_email:email,email:email,message:msg,to_email:'orellanajuan80@hotmail.com',time:new Date().toLocaleString('es-AR')})
     .then(function(){
       feedback.textContent = '✅ ¡Mensaje enviado correctamente!';
       document.getElementById('f-name').value = '';
