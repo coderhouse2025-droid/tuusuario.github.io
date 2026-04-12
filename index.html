@@ -886,15 +886,17 @@ async function loadRepos() {
       const t = repo.topics || [];
 
       // Multi-category map: repo can appear under multiple filters
-      const categoryMap = {
-        'tuusuario.github.io': ['ml','analytics'],
-        'Miami-Heat':          ['ml','analytics'],
-        'Supertienda':         ['ml','analytics'],
-        'Tableau.github.io':   ['bi'],
-        'Dress---Power-BI':    ['bi','analytics'],
-        'Dress-PowerBI':       ['bi','analytics'],
-        'dress-powerbi':       ['bi','analytics']
-      };
+   const categoryMap = {
+    'tuusuario.github.io': ['ml', 'analytics'],
+    'Miami-Heat': ['ml', 'analytics'],
+    'Supertienda': ['ml', 'analytics'],
+    'Tableau.github.io': ['bi', 'analytics'],
+    'Dress---Power-BI': ['bi', 'analytics'],
+    'Dress-PowerBI': ['bi', 'analytics'],
+    'dress-powerbi': ['bi', 'analytics'],
+    'Tableros-Interactivos-': ['bi', 'analytics'],  // ← agregado
+};
+
       const categories = categoryMap[repo.name] || ['analytics'];
       const category = categories[0]; // primary category stored in data-category
 
