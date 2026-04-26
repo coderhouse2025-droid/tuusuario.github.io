@@ -8,7 +8,7 @@
 
 ## 👤 Sobre el Proyecto
 
-Este portfolio centraliza y presenta de forma profesional mi trayectoria en Data Science, Machine Learning y Analítica de Negocios. Combina mi experiencia previa en **control de gestión y administración** con herramientas modernas de ciencia de datos.
+Este portafolio centraliza y presenta de forma profesional mi trayectoria en Data Science, Machine Learning y Analítica de Negocios. Combina mi experiencia previa en **control de gestión y administración** con herramientas modernas de ciencia de datos.
 
 El sitio carga los proyectos dinámicamente desde la **API pública de GitHub**, por lo que siempre refleja el estado actualizado del perfil.
 
