@@ -1,6 +1,6 @@
 # 🌐 Juan Manuel Orellana — Portfolio Personal · Data Science & Analytics
 
-> Sitio web de portfolio personal desarrollado con HTML, CSS y JavaScript puro, alojado en **GitHub Pages**. Presenta mi perfil profesional, habilidades, proyectos de Data Science / Analytics y un formulario de contacto.
+> Sitio web de portafolio personal desarrollado con HTML, CSS y JavaScript puro, alojado en **GitHub Pages**. Presenta mi perfil profesional, habilidades, proyectos de Data Science / Analytics y un formulario de contacto.
 
 🔗 **Live site:** https://coderhouse2025-droid.github.io/tuusuario.github.io/
 
@@ -83,7 +83,7 @@ npx serve .
 
 - 📍 Ramos Mejía, Buenos Aires, Argentina
 - 💼 Disponible para trabajar
-- 🔗 [LinkedIn](#) · [Tableau Public](#) *(actualizá con tus URLs reales)*
+- 🔗 www.linkedin.com/in/juan-manuel-orellana
 
 ---
 
@@ -97,4 +97,4 @@ Data Science I y II — Coderhouse 2025
 
 ## 📄 Licencia
 
-Proyecto de uso personal con fines de portfolio. Podés inspirarte en el diseño y estructura, pero el contenido (textos, CV, imágenes) es propiedad del autor.
+Proyecto de uso personal con fines de portafolio. Podés inspirarte en el diseño y estructura, pero el contenido (textos, CV, imágenes) es propiedad del autor.
