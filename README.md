@@ -2,7 +2,7 @@
 
 > Sitio web de portfolio personal desarrollado con HTML, CSS y JavaScript puro, alojado en **GitHub Pages**. Presenta mi perfil profesional, habilidades, proyectos de Data Science / Analytics y un formulario de contacto.
 
-🔗 **Live site:** [coderhouse2025-droid.github.io](https://coderhouse2025-droid.github.io)
+🔗 **Live site:** https://coderhouse2025-droid.github.io/tuusuario.github.io/
 
 ---
 
