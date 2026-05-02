@@ -949,8 +949,15 @@ async function loadRepos() {
       const bg = bgColors[i % bgColors.length];
       const iconUrl = repoIconos[repo.name];
       const isN8n = repo.name === 'n8n_Workflows-.' || repo.name === 'n8n_Workflows-';
+      // Repos whose PNG has a white/light background → multiply blends it out over the green banner
+      const multiplyBlend = ['Stock', 'App', 'n8n_Workflows-.', 'n8n_Workflows-'];
+      // Repos whose PNG has a black/dark background → screen blends it out over the green banner
+      const screenBlend   = ['Generador_QR', 'Chatbot'];
+      const blendMode = multiplyBlend.includes(repo.name) ? 'mix-blend-mode:multiply;'
+                      : screenBlend.includes(repo.name)   ? 'mix-blend-mode:screen;'
+                      : '';
       const bannerContent = iconUrl
-        ? `<img src="${iconUrl}" alt="${repo.name}" style="max-width:${isN8n ? '60%' : '80%'};max-height:${isN8n ? '80px' : '110px'};object-fit:contain;display:block;margin:auto;${isN8n ? 'mix-blend-mode:multiply;' : ''}">`
+        ? `<img src="${iconUrl}" alt="${repo.name}" style="max-width:${isN8n ? '60%' : '80%'};max-height:${isN8n ? '80px' : '110px'};object-fit:contain;display:block;margin:auto;${blendMode}">`
         : banners[i % banners.length];
 
       // Special link for Tableros Interactivos: opens a new page with project buttons
