@@ -1,4 +1,4 @@
-# 🌐 Juan Manuel Orellana — Portfolio Personal · Data Science & Analytics
+# 🌐 Juan Manuel Orellana — Portafolio Personal · Data Science & Analytics
 
 > Sitio web de portafolio personal desarrollado con HTML, CSS y JavaScript puro, alojado en **GitHub Pages**. Presenta mi perfil profesional, habilidades, proyectos de Data Science / Analytics y un formulario de contacto.
 
