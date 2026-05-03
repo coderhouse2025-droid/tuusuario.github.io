@@ -893,7 +893,7 @@ const bgColors = ['#e8f5ee','#e6f3ec','#eaf7f0','#f0faf4','#e8f5ee','#ecf7f1'];
 async function loadRepos() {
   const grid = document.getElementById('projects-grid');
   try {
-    const res = await fetch('https://api.github.com/users/coderhouse2025-droid/repos?sort=updated&per_page=9');
+    const res = await fetch('https://api.github.com/users/coderhouse2025-droid/repos?sort=updated&per_page=20');
     if (!res.ok) { grid.innerHTML = '<p class="proj-loading">Error ' + res.status + ' al cargar repositorios.</p>'; return; }
     const repos = await res.json();
     if (!Array.isArray(repos) || repos.length === 0) { grid.innerHTML = '<p class="proj-loading">No se encontraron repositorios públicos.</p>'; return; }
@@ -909,6 +909,9 @@ async function loadRepos() {
       'dress-powerbi':       'https://raw.githubusercontent.com/coderhouse2025-droid/tuusuario.github.io/main/ICONOS/dress.png',
       'n8n_Workflows-.':     'https://raw.githubusercontent.com/coderhouse2025-droid/tuusuario.github.io/main/ICONOS/n8n.png',
       'n8n_Workflows-':      'https://raw.githubusercontent.com/coderhouse2025-droid/tuusuario.github.io/main/ICONOS/n8n.png',
+      'n8n_Workflows':       'https://raw.githubusercontent.com/coderhouse2025-droid/tuusuario.github.io/main/ICONOS/n8n.png',
+      'n8n-Workflows':       'https://raw.githubusercontent.com/coderhouse2025-droid/tuusuario.github.io/main/ICONOS/n8n.png',
+      'n8n':                 'https://raw.githubusercontent.com/coderhouse2025-droid/tuusuario.github.io/main/ICONOS/n8n.png',
       'Stock':               'https://raw.githubusercontent.com/coderhouse2025-droid/tuusuario.github.io/main/ICONOS/Stock%20Manager.png',
       'Generador_QR':        'https://raw.githubusercontent.com/coderhouse2025-droid/tuusuario.github.io/main/ICONOS/QR.png',
       'Chatbot':             'https://raw.githubusercontent.com/coderhouse2025-droid/tuusuario.github.io/main/ICONOS/Chatbot.png',
@@ -926,6 +929,9 @@ async function loadRepos() {
     'Supertienda': ['ml', 'analytics'],
     'n8n_Workflows-.': ['automatizacion'],
     'n8n_Workflows-': ['automatizacion'],
+    'n8n_Workflows':  ['automatizacion'],
+    'n8n-Workflows':  ['automatizacion'],
+    'n8n':            ['automatizacion'],
     'Tableau.github.io': ['bi', 'analytics'],
     'Dress---Power-BI': ['bi', 'analytics'],
     'Dress-PowerBI': ['bi', 'analytics'],
@@ -937,7 +943,8 @@ async function loadRepos() {
     'App':                 ['herramientas'],
 };
 
-      const categories = categoryMap[repo.name] || ['analytics'];
+      const categories = categoryMap[repo.name] ||
+        (repo.name.toLowerCase().includes('n8n') ? ['automatizacion'] : ['analytics']);
       const category = categories[0]; // primary category stored in data-category
 
       const repoUrl = repo.name === 'Tableau.github.io'
@@ -947,11 +954,11 @@ async function loadRepos() {
       const displayTags = t.length ? t.slice(0,4) : (repo.language ? [repo.language,'Data Science'] : ['Data Science']);
       const tagsHtml = displayTags.map(tag => `<span class="tag">${tag}</span>`).join('');
       const bg = bgColors[i % bgColors.length];
-      const iconUrl = repoIconos[repo.name];
-      const isN8n = repo.name === 'n8n_Workflows-.' || repo.name === 'n8n_Workflows-';
+      const isN8n = repo.name.toLowerCase().includes('n8n');
+      const iconUrl = repoIconos[repo.name] ||
+        (isN8n ? 'https://raw.githubusercontent.com/coderhouse2025-droid/tuusuario.github.io/main/ICONOS/n8n.png' : null);
       // Repos whose PNG has a white/light background → multiply blends it out over the green banner
-      const multiplyBlend = ['Stock', 'App', 'n8n_Workflows-.', 'n8n_Workflows-'];
-      const blendMode = multiplyBlend.includes(repo.name) ? 'mix-blend-mode:multiply;' : '';
+      const blendMode = (['Stock', 'App'].includes(repo.name) || isN8n) ? 'mix-blend-mode:multiply;' : '';
       const bannerContent = iconUrl
         ? `<img src="${iconUrl}" alt="${repo.name}" style="max-width:${isN8n ? '60%' : '80%'};max-height:${isN8n ? '80px' : '110px'};object-fit:contain;display:block;margin:auto;${blendMode}">`
         : banners[i % banners.length];
