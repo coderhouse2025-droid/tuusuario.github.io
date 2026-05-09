@@ -892,11 +892,39 @@ const bgColors = ['#e8f5ee','#e6f3ec','#eaf7f0','#f0faf4','#e8f5ee','#ecf7f1'];
 // ── GITHUB REPOS ─────────────────────────────────────────────
 async function loadRepos() {
   const grid = document.getElementById('projects-grid');
+  let allRepos = [];
+  let page = 1;
+  let hasMore = true;
+
   try {
-    const res = await fetch('https://api.github.com/users/coderhouse2025-droid/repos?sort=updated&per_page=100');
-    if (!res.ok) { grid.innerHTML = '<p class="proj-loading">Error ' + res.status + ' al cargar repositorios.</p>'; return; }
-    const allRepos = await res.json();
-    if (!Array.isArray(allRepos) || allRepos.length === 0) { grid.innerHTML = '<p class="proj-loading">No se encontraron repositorios públicos.</p>'; return; }
+    while (hasMore) {
+      const res = await fetch(`https://api.github.com/users/coderhouse2025-droid/repos?sort=updated&per_page=100&page=${page}`);
+      if (!res.ok) {
+        grid.innerHTML = `<p class="proj-loading">Error ${res.status} al cargar repositorios.</p>`;
+        return;
+      }
+
+      const repos = await res.json();
+      if (!Array.isArray(repos) || repos.length === 0) {
+        hasMore = false;
+      } else {
+        allRepos = allRepos.concat(repos);
+        page++;
+      }
+    }
+
+    if (allRepos.length === 0) {
+      grid.innerHTML = `<p class="proj-loading">No se encontraron repositorios públicos.</p>`;
+      return;
+    }
+
+    // Aquí procesás todos los repos
+    console.log(`Total repos cargados: ${allRepos.length}`);
+    // ... tu código para mostrarlos en la grilla ...
+  } catch (error) {
+    grid.innerHTML = `<p class="proj-loading">Error al cargar repositorios: ${error.message}</p>`;
+  }
+}
 
     // ── LISTA BLANCA ─────────────────────────────────────────────
     // Agregá o quitá nombres de repositorios aquí para controlar cuáles aparecen.
